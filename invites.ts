@@ -1,10 +1,11 @@
-import { readdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { readdir } from "node:fs/promises";
+import { join } from "node:path";
+import Bun from "bun";
 
 const dataFolder = join(__dirname, "data");
 const invitesFile = join(__dirname, "invites.txt");
 
-async function getUniqueInvites(): Promise<string[]> {
+async function getUniqueInvites() {
   const files = await readdir(dataFolder);
   const invites = new Set<string>();
 
@@ -13,8 +14,8 @@ async function getUniqueInvites(): Promise<string[]> {
 
     const filePath = join(dataFolder, file);
     try {
-      const content = await readFile(filePath, "utf-8");
-      const json = JSON.parse(content);
+      const content = Bun.file(filePath).text();
+      const json = JSON.parse(await content);
 
       for (const invite of json) {
         if (invite.vanity_url_code) {
@@ -34,7 +35,7 @@ async function main() {
   const inviteContent = uniqueInvites.join("\n");
 
   try {
-    await writeFile(invitesFile, inviteContent);
+    await Bun.write(invitesFile, inviteContent);
     console.log("Invites saved to invites.txt");
   } catch (error) {
     console.error("Error writing invites file:", error);

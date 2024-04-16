@@ -1,5 +1,4 @@
-import fs from "fs/promises";
-import { writeFile } from "fs/promises";
+import Bun from "bun";
 
 const locales = [
   "bg",
@@ -60,7 +59,7 @@ async function getAndSaveGuilds(locale: string) {
     const fileName = `data/${locale}.json`;
 
     try {
-      await writeFile(fileName, JSON.stringify(data.hits, null, 2));
+      await Bun.write(fileName, JSON.stringify(data.hits, null, 2));
       savedLocales.add(locale);
       console.log(`Saved guilds for locale: ${locale} to ${fileName}`);
     } catch (error) {

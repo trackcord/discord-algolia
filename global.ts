@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import Bun from "bun";
 
 async function getAndSaveGuilds() {
   const response = await fetch(
@@ -20,7 +20,7 @@ async function getAndSaveGuilds() {
 
   if (data.hits.length) {
     try {
-      await writeFile("data/global.json", JSON.stringify(data.hits, null, 2));
+      await Bun.write("data/global.json", JSON.stringify(data.hits, null, 2));
       console.log(`Saved guilds to data/global.json`);
     } catch (error) {
       console.error(`Error saving guilds`, error);
