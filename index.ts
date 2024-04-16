@@ -1,4 +1,5 @@
-import fs from "fs";
+import fs from "fs/promises";
+import { writeFile } from "fs/promises";
 
 const locales = [
   "bg",
@@ -34,6 +35,8 @@ const locales = [
   "hi",
 ];
 
+const savedLocales = new Set();
+
 async function getAndSaveGuilds(locale: string) {
   const response = await fetch(
     "https://nktzz4aizu-dsn.algolia.net/1/indexes/prod_discoverable_guilds/query?x-algolia-agent=Algolia%20for%20JavaScript%20(4.1.0)%3B%20Browser",
@@ -43,7 +46,7 @@ async function getAndSaveGuilds(locale: string) {
         "x-algolia-application-id": "NKTZZ4AIZU",
       },
       body: JSON.stringify({
-        query: "",
+        query: "pfps",
         optionalFilters: [`preferred_locale: ${locale}`],
         hitsPerPage: 1000,
       }),
@@ -52,25 +55,25 @@ async function getAndSaveGuilds(locale: string) {
   );
 
   const data = await response.json();
-  if (!data.hits.length) {
-    // try to search without the region, like zh-CN -> CN
+
+  if (data.hits.length && !savedLocales.has(locale)) {
+    const fileName = `data/${locale}.json`;
+
+    try {
+      await writeFile(fileName, JSON.stringify(data.hits, null, 2));
+      savedLocales.add(locale);
+      console.log(`Saved guilds for locale: ${locale} to ${fileName}`);
+    } catch (error) {
+      console.error(`Error saving guilds for locale: ${locale}`, error);
+    }
+  } else if (!data.hits.length) {
     const region = locale.split("-")[1];
     if (region) {
-      return getAndSaveGuilds(region);
+      await getAndSaveGuilds(region);
     } else {
       console.error(`No guilds found for locale: ${locale}`);
-      return;
     }
-  }
-  const fileName = `data/${locale}.json`;
-
-  try {
-    await fs.promises.writeFile(fileName, JSON.stringify(data.hits, null, 2));
-    console.log(`Saved guilds for locale: ${locale} to ${fileName}`);
-  } catch (error) {
-    console.error(`Error saving guilds for locale: ${locale}`, error);
   }
 }
 
-// Call getAndSaveGuilds for each locale
-locales.forEach((locale) => getAndSaveGuilds(locale));
+locales.forEach(async (locale) => await getAndSaveGuilds(locale));
