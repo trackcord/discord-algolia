@@ -32,7 +32,8 @@ async function getUniqueInvites() {
 
 async function main() {
   const uniqueInvites = await getUniqueInvites();
-  const inviteContent = uniqueInvites.join("\n");
+  // each should be like https://discord.gg/invitecode and new line
+  const inviteContent = uniqueInvites.map((invite) => `https://discord.gg/${invite}\n`).join("");
 
   try {
     await Bun.write(invitesFile, inviteContent);
