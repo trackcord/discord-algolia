@@ -17,10 +17,7 @@ async function getUniqueInvites() {
       const content = await Bun.file(filePath).json();
 
       for (const invite of content) {
-        if (
-          invite.vanity_url_code &&
-          !/\d$/.test(invite.vanity_url_code)
-        ) {
+        if (invite.vanity_url_code && !/\d$/.test(invite.vanity_url_code)) {
           invites.add(invite.vanity_url_code);
         }
       }
