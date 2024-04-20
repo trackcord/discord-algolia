@@ -8,7 +8,7 @@ const invitesFile = join(dataFolder, "invites.txt");
 
 async function getUniqueInvites() {
   const files = await readdir(dataFolder);
-  const invites = new Set<string>();
+  const invites = new Map<string, any>();
 
   for (const file of files) {
     if (!file.endsWith(".json")) continue;
@@ -19,7 +19,9 @@ async function getUniqueInvites() {
 
       for (const invite of content) {
         if (invite.vanity_url_code && !/\d+$/.test(invite.vanity_url_code)) {
-          invites.add(invite.vanity_url_code);
+          if (!invites.has(invite.vanity_url_code)) {
+            invites.set(invite.vanity_url_code, invite);
+          }
         }
       }
     } catch (error) {
@@ -27,9 +29,12 @@ async function getUniqueInvites() {
     }
   }
 
-  return Array.from(invites);
-}
+  const sortedInvites = Array.from(invites.values()).sort(
+    (a, b) => b.approximate_member_count - a.approximate_member_count,
+  );
 
+  return sortedInvites.map((invite) => invite.vanity_url_code);
+}
 async function main() {
   const uniqueInvites = await getUniqueInvites();
   const inviteContent = uniqueInvites

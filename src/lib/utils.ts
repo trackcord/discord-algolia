@@ -35,7 +35,7 @@ async function getAndSaveGuilds(userQuery?: string, locale?: string) {
 
   const data = await response.json();
 
-  if (data.hits.length) {
+  if (data.hits.length > 0) {
     const fileName = `data/${locale || "all"}.json`;
 
     try {
