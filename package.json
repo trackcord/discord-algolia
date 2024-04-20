@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "bun --bun src/index.ts",
-    "invites": "bun --bun src/invites.ts"
+    "invites": "bun --bun src/invites.ts",
+    "lint": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/bun": "^1.1.0",
