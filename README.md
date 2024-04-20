@@ -1,15 +1,30 @@
-# discord-algoria-fun
+# Discord Algoria
 
-To install dependencies:
+> An Scraper for [Discord Discovery Search](https://discord.com/guild-discovery) using [Algoria](https://www.algolia.com) API
+
+## Setting up
+
+1. Clone the repository
+2. Run `bun install` to install the dependencies
+
+## Running
+
+### Per-Language
 
 ```bash
-bun install
+bun run start
 ```
 
-To run:
+### Global (All Languages)
 
 ```bash
-bun run index.ts
+bun run start --global
 ```
 
-This project was created using `bun init` in bun v1.1.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+### Getting Invites
+
+- You must need to have files in the `data` directory
+
+```bash
+bun run invites
+```

@@ -3,7 +3,7 @@ import { join } from "node:path";
 import Bun from "bun";
 
 const dataFolder = join(__dirname, "data");
-const invitesFile = join(__dirname, "invites.txt");
+const invitesFile = join(dataFolder, "invites.txt");
 
 async function getUniqueInvites() {
   const files = await readdir(dataFolder);
@@ -16,14 +16,20 @@ async function getUniqueInvites() {
     try {
       const content = Bun.file(filePath).text();
       const json = JSON.parse(await content);
+      const digits = new RegExp(/\d/);
 
       for (const invite of json) {
-        if (invite.vanity_url_code) {
+        if (
+          invite.vanity_url_code &&
+          !digits.test(
+            invite.vanity_url_code[invite.vanity_url_code.length - 1],
+          )
+        ) {
           invites.add(invite.vanity_url_code);
         }
       }
     } catch (error) {
-      console.error(`Error processing file ${filePath}:`, error);
+      console.error(`Error processing file ${filePath}: ${error}`);
     }
   }
 
@@ -32,14 +38,15 @@ async function getUniqueInvites() {
 
 async function main() {
   const uniqueInvites = await getUniqueInvites();
-  // each should be like https://discord.gg/invitecode and new line
-  const inviteContent = uniqueInvites.map((invite) => `https://discord.gg/${invite}\n`).join("");
+  const inviteContent = uniqueInvites
+    .map((code) => `https://discord.gg/${code}`)
+    .join("\n");
 
   try {
     await Bun.write(invitesFile, inviteContent);
-    console.log("Invites saved to invites.txt");
+    console.log("Saved invites to invites.txt");
   } catch (error) {
-    console.error("Error writing invites file:", error);
+    console.error(`Error saving invites: ${error}`);
   }
 }
 
