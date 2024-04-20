@@ -37,7 +37,7 @@ async function main() {
 
   try {
     await Bun.write(invitesFile, inviteContent);
-    console.log("Saved invites to invites.txt");
+    console.log(`Invites saved to ${invitesFile}`);
   } catch (error) {
     console.error(`Error saving invites: ${error}`);
   }
