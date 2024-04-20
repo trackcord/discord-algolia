@@ -1,6 +1,6 @@
 # Discord Algoria
 
-> An Scraper for [Discord Discovery Search](https://discord.com/guild-discovery) using [Algoria](https://www.algolia.com) API
+> An Scraper for [Discord Discovery Search](https://discord.com/guild-discovery) using [Algoria](https://www.algolia.com) API (and [Bun](https://bun.sh)!)
 
 ## Setting up
 
