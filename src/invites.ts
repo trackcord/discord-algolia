@@ -2,7 +2,7 @@ import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import Bun from "bun";
 
-const dataFolder = join(__dirname, "data");
+const dataFolder = join(__dirname, "..", "data");
 const invitesFile = join(dataFolder, "invites.txt");
 
 async function getUniqueInvites() {
@@ -14,16 +14,12 @@ async function getUniqueInvites() {
 
     const filePath = join(dataFolder, file);
     try {
-      const content = Bun.file(filePath).text();
-      const json = JSON.parse(await content);
-      const digits = new RegExp(/\d/);
+      const content = await Bun.file(filePath).json();
 
-      for (const invite of json) {
+      for (const invite of content) {
         if (
           invite.vanity_url_code &&
-          !digits.test(
-            invite.vanity_url_code[invite.vanity_url_code.length - 1],
-          )
+          !/\d$/.test(invite.vanity_url_code)
         ) {
           invites.add(invite.vanity_url_code);
         }
