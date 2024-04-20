@@ -1,5 +1,6 @@
 import readline from "node:readline";
 import Bun from "bun";
+import Logger from "./logger";
 
 async function askForQuery() {
   const rl = readline.createInterface({
@@ -39,14 +40,16 @@ async function getAndSaveGuilds(userQuery?: string, locale?: string) {
 
     try {
       await Bun.write(fileName, JSON.stringify(data.hits, null, 2));
-      console.log(`Saved guilds for locale: ${locale || "all"} to ${fileName}`);
+      Logger.success(
+        `Saved guilds for locale: ${locale || "all"} to ${fileName}`,
+      );
     } catch (error) {
-      console.error(
+      Logger.error(
         `Error saving guilds for locale: ${locale || "all"} to ${fileName}: ${error}`,
       );
     }
   } else {
-    console.error(`No guilds found for locale: ${locale || "all"}`);
+    Logger.error(`No guilds found for locale: ${locale || "all"}`);
   }
 }
 

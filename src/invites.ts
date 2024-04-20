@@ -1,6 +1,7 @@
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import Bun from "bun";
+import Logger from "./lib/logger";
 
 const dataFolder = join(__dirname, "..", "data");
 const invitesFile = join(dataFolder, "invites.txt");
@@ -22,7 +23,7 @@ async function getUniqueInvites() {
         }
       }
     } catch (error) {
-      console.error(`Error processing file ${filePath}: ${error}`);
+      Logger.error(`Error processing file ${filePath}: ${error}`);
     }
   }
 
@@ -37,10 +38,10 @@ async function main() {
 
   try {
     await Bun.write(invitesFile, inviteContent);
-    console.log(`Invites saved to ${invitesFile}`);
+    Logger.success(`Invites saved to ${invitesFile}`);
   } catch (error) {
-    console.error(`Error saving invites: ${error}`);
+    Logger.error(`Error saving invites: ${error}`);
   }
 }
 
-main().catch(console.error);
+main().catch(Logger.error);
