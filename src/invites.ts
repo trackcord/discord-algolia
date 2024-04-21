@@ -1,5 +1,6 @@
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
+
 import Bun from "bun";
 import Logger from "./lib/logger";
 
@@ -18,14 +19,12 @@ async function getUniqueInvites() {
       const content = await Bun.file(filePath).json();
 
       for (const invite of content) {
-        if (invite.vanity_url_code && !/\d+$/.test(invite.vanity_url_code)) {
-          if (!invites.has(invite.vanity_url_code)) {
-            invites.set(invite.vanity_url_code, invite);
-          }
+        if (invite.vanity_url_code) {
+          invites.set(invite.vanity_url_code, invite);
         }
       }
     } catch (error) {
-      Logger.error(`Error processing file ${filePath}: ${error}`);
+      Logger.error(`Error reading file ${filePath}: ${error}`);
     }
   }
 
@@ -36,6 +35,7 @@ async function getUniqueInvites() {
   return sortedInvites.map((invite) => invite.vanity_url_code);
 }
 async function main() {
+  const start = Date.now();
   const uniqueInvites = await getUniqueInvites();
   const inviteContent = uniqueInvites
     .map((code) => `https://discord.gg/${code}`)
@@ -43,9 +43,13 @@ async function main() {
 
   try {
     await Bun.write(invitesFile, inviteContent);
-    Logger.success(`Invites saved to ${invitesFile}`);
+    Logger.success(
+      `Saved ${uniqueInvites.length} unique invites to ${invitesFile} in ${
+        Date.now() - start
+      }ms`,
+    );
   } catch (error) {
-    Logger.error(`Error saving invites: ${error}`);
+    Logger.error(`Error saving invites to ${invitesFile}: ${error}`);
   }
 }
 
