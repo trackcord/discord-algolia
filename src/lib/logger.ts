@@ -1,6 +1,10 @@
 import { ansiColors } from "./data";
 
 export default class Logger {
+  private constructor() {
+    throw new Error("This class cannot be instantiated");
+  }
+
   private static log(message: string, color: string) {
     console.log(
       `${color}[ ${color === ansiColors.blue ? "INFO" : color === ansiColors.yellow ? "WARN" : color === ansiColors.red ? "ERROR" : color === ansiColors.green ? "SUCCESS" : "CUSTOM"} ] ${ansiColors.reset}${message}`,

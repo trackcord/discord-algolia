@@ -58,4 +58,15 @@ const ansiColors = {
   bgWhite: "\x1b[47m",
 };
 
-export { locales, ansiColors };
+const categoryIds = [
+  -1, // All
+  1, // Gaming
+  16, // Anime & Manga
+  3, // Entertainment
+  35, // Content Creators
+  14, // General Chatting
+  39, // Fandom
+  34, // Role-Playing
+];
+
+export { locales, ansiColors, categoryIds };
