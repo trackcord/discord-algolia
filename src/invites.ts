@@ -27,17 +27,17 @@ const writeInvites = async (invites: string[]): Promise<void> => {
 const extractUniqueInvites = async (): Promise<string[]> => {
   const files = await readdir(CONFIG.dataPath);
   const jsonFiles = files.filter(file => file.endsWith(CONFIG.filePattern));
-  
+
   const invitesMap = new Map<string, DiscordInvite>();
-  
+
   await Promise.all(
     jsonFiles.map(async file => {
       const invites = await readJsonFile(join(CONFIG.dataPath, file));
-      invites.forEach(invite => {
+      for (const invite of invites) {
         if (invite.vanity_url_code) {
           invitesMap.set(invite.vanity_url_code, invite);
         }
-      });
+      }
     })
   );
 
@@ -48,11 +48,11 @@ const extractUniqueInvites = async (): Promise<string[]> => {
 
 const main = async (): Promise<void> => {
   const start = Date.now();
-  
+
   try {
     const uniqueInvites = await extractUniqueInvites();
     await writeInvites(uniqueInvites);
-    
+
     const duration = ((Date.now() - start) / 1000).toFixed(2);
     Logger.success(
       `Saved ${uniqueInvites.length} unique invites to ${CONFIG.outputFile} in ${duration}s`
