@@ -1,33 +1,59 @@
-import { ansiColors } from "./data";
+import { ansiColors } from "./data"
+
+enum LogLevel {
+  INFO = "INFO",
+  WARN = "WARN",
+  ERROR = "ERROR",
+  SUCCESS = "SUCCESS",
+  CUSTOM = "CUSTOM",
+}
+
+type ColorMap = {
+  [K in LogLevel]: string
+}
 
 export default class Logger {
+  private static readonly colorMap: ColorMap = {
+    [LogLevel.INFO]: ansiColors.blue,
+    [LogLevel.WARN]: ansiColors.yellow,
+    [LogLevel.ERROR]: ansiColors.red,
+    [LogLevel.SUCCESS]: ansiColors.green,
+    [LogLevel.CUSTOM]: "",
+  }
+
   private constructor() {
-    throw new Error("This class cannot be instantiated");
+    throw new Error("Logger cannot be instantiated")
   }
 
-  private static log(message: string, color: string) {
-    console.log(
-      `${color}[ ${color === ansiColors.blue ? "INFO" : color === ansiColors.yellow ? "WARN" : color === ansiColors.red ? "ERROR" : color === ansiColors.green ? "SUCCESS" : "CUSTOM"} ] ${ansiColors.reset}${message}`,
-    );
+  private static format(
+    level: LogLevel,
+    message: string,
+    color: string
+  ): string {
+    return `${color}[ ${level} ]${ansiColors.reset} ${message}`
   }
 
-  public static info(message: string) {
-    Logger.log(message, ansiColors.blue);
+  private static log(level: LogLevel, message: string, color: string): void {
+    console.log(Logger.format(level, message, color))
   }
 
-  public static warn(message: string) {
-    Logger.log(message, ansiColors.yellow);
+  static info(message: string): void {
+    Logger.log(LogLevel.INFO, message, Logger.colorMap[LogLevel.INFO])
   }
 
-  public static error(message: string) {
-    Logger.log(message, ansiColors.red);
+  static warn(message: string): void {
+    Logger.log(LogLevel.WARN, message, Logger.colorMap[LogLevel.WARN])
   }
 
-  public static success(message: string) {
-    Logger.log(message, ansiColors.green);
+  static error(message: string): void {
+    Logger.log(LogLevel.ERROR, message, Logger.colorMap[LogLevel.ERROR])
   }
 
-  public static custom(message: string, color: string) {
-    Logger.log(message, color);
+  static success(message: string): void {
+    Logger.log(LogLevel.SUCCESS, message, Logger.colorMap[LogLevel.SUCCESS])
+  }
+
+  static custom(message: string, color: string): void {
+    Logger.log(LogLevel.CUSTOM, message, color)
   }
 }

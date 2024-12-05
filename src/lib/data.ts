@@ -24,7 +24,7 @@ const locales = [
   "ja",
   "zh-TW",
   "ko",
-];
+]
 
 const ansiColors = {
   reset: "\x1b[0m",
@@ -50,17 +50,59 @@ const ansiColors = {
   bgMagenta: "\x1b[45m",
   bgCyan: "\x1b[46m",
   bgWhite: "\x1b[47m",
-};
+}
 
 const categoryIds = [
   -1, // All
-  1, // Gaming
-  16, // Anime & Manga
-  3, // Entertainment
-  35, // Content Creators
-  14, // General Chatting
+  0, // General
+  10, // Travel & Food
+  15, // Esports
+  30, // LFG
+  32, // Theorycraft
+  36, // Business
   39, // Fandom
-  34, // Role-Playing
-];
+  43, // Emoji
+  18, // Books
+  23, // Podcasts
+  28, // Investing
+  7, // Sports
+  13, // Other
+  2, // Music
+  3, // Entertainment
+  4, // Creative Arts
+  6, // Education
+  9, // Relationships & Identity
+  11, // Fitness & Health
+  12, // Finance
+  45, // Mobile
+  16, // Anime & Manga
+  17, // Movies & TV
+  19, // Art
+  20, // Writing
+  22, // Programming
+  25, // Memes
+  27, // Cryptocurrency
+  31, // Customer Support
+  33, // Events
+  34, // Roleplay
+  37, // Local Group
+  38, // Collaboration
+  40, // Wiki & Guide
+  42, // Subreddit
+  1, // Gaming
+  5, // Science & Tech
+  8, // Fashion & Beauty
+  14, // General Chatting
+  21, // Crafts, DIY, & Making
+  48, // Game Developer
+  49, // Bots
+  24, // Tabletop Games
+  26, // News & Current Events
+  29, // Studying & Teaching
+  35, // Content Creator
+  44, // Comics & Cartoons
+  46, // Console
+  47, // Charity & Nonprofit
+]
 
-export { locales, ansiColors, categoryIds };
+export { locales, ansiColors, categoryIds }
