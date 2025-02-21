@@ -1,6 +1,6 @@
 # Discord Algolia
 
-> [!WARNING]
+> [!CAUTION]
 > Due to recent updates in Discord Algolia credentials, this functionality may
 > not work as expected.
 
