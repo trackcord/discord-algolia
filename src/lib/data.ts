@@ -53,56 +53,251 @@ const ansiColors = {
 }
 
 const categoryIds = [
-  -1, // All
-  0, // General
-  10, // Travel & Food
-  15, // Esports
-  30, // LFG
-  32, // Theorycraft
-  36, // Business
-  39, // Fandom
-  43, // Emoji
-  18, // Books
-  23, // Podcasts
-  28, // Investing
-  7, // Sports
-  13, // Other
-  2, // Music
-  3, // Entertainment
-  4, // Creative Arts
-  6, // Education
-  9, // Relationships & Identity
-  11, // Fitness & Health
-  12, // Finance
-  45, // Mobile
-  16, // Anime & Manga
-  17, // Movies & TV
-  19, // Art
-  20, // Writing
-  22, // Programming
-  25, // Memes
-  27, // Cryptocurrency
-  31, // Customer Support
-  33, // Events
-  34, // Roleplay
-  37, // Local Group
-  38, // Collaboration
-  40, // Wiki & Guide
-  42, // Subreddit
-  1, // Gaming
-  5, // Science & Tech
-  8, // Fashion & Beauty
-  14, // General Chatting
-  21, // Crafts, DIY, & Making
-  48, // Game Developer
-  49, // Bots
-  24, // Tabletop Games
-  26, // News & Current Events
-  29, // Studying & Teaching
-  35, // Content Creator
-  44, // Comics & Cartoons
-  46, // Console
-  47, // Charity & Nonprofit
+  {
+    id: 0,
+    is_primary: true,
+    name: "General",
+  },
+  {
+    id: 10,
+    is_primary: true,
+    name: "Travel & Food",
+  },
+  {
+    id: 15,
+    is_primary: false,
+    name: "Esports",
+  },
+  {
+    id: 30,
+    is_primary: false,
+    name: "LFG",
+  },
+  {
+    id: 32,
+    is_primary: false,
+    name: "Theorycraft",
+  },
+  {
+    id: 36,
+    is_primary: false,
+    name: "Business",
+  },
+  {
+    id: 39,
+    is_primary: false,
+    name: "Fandom",
+  },
+  {
+    id: 43,
+    is_primary: true,
+    name: "Emoji",
+  },
+  {
+    id: 18,
+    is_primary: false,
+    name: "Books",
+  },
+  {
+    id: 23,
+    is_primary: false,
+    name: "Podcasts",
+  },
+  {
+    id: 28,
+    is_primary: false,
+    name: "Investing",
+  },
+  {
+    id: 7,
+    is_primary: true,
+    name: "Sports",
+  },
+  {
+    id: 13,
+    is_primary: true,
+    name: "Other",
+  },
+  {
+    id: 2,
+    is_primary: true,
+    name: "Music",
+  },
+  {
+    id: 3,
+    is_primary: true,
+    name: "Entertainment",
+  },
+  {
+    id: 4,
+    is_primary: true,
+    name: "Creative Arts",
+  },
+  {
+    id: 6,
+    is_primary: true,
+    name: "Education",
+  },
+  {
+    id: 9,
+    is_primary: true,
+    name: "Relationships & Identity",
+  },
+  {
+    id: 11,
+    is_primary: true,
+    name: "Fitness & Health",
+  },
+  {
+    id: 12,
+    is_primary: true,
+    name: "Finance",
+  },
+  {
+    id: 45,
+    is_primary: false,
+    name: "Mobile",
+  },
+  {
+    id: 16,
+    is_primary: false,
+    name: "Anime & Manga",
+  },
+  {
+    id: 17,
+    is_primary: false,
+    name: "Movies & TV",
+  },
+  {
+    id: 19,
+    is_primary: false,
+    name: "Art",
+  },
+  {
+    id: 20,
+    is_primary: false,
+    name: "Writing",
+  },
+  {
+    id: 22,
+    is_primary: false,
+    name: "Programming",
+  },
+  {
+    id: 25,
+    is_primary: false,
+    name: "Memes",
+  },
+  {
+    id: 27,
+    is_primary: false,
+    name: "Cryptocurrency",
+  },
+  {
+    id: 31,
+    is_primary: false,
+    name: "Customer Support",
+  },
+  {
+    id: 33,
+    is_primary: false,
+    name: "Events",
+  },
+  {
+    id: 34,
+    is_primary: false,
+    name: "Roleplay",
+  },
+  {
+    id: 37,
+    is_primary: false,
+    name: "Local Group",
+  },
+  {
+    id: 38,
+    is_primary: false,
+    name: "Collaboration",
+  },
+  {
+    id: 40,
+    is_primary: false,
+    name: "Wiki & Guide",
+  },
+  {
+    id: 42,
+    is_primary: false,
+    name: "Subreddit",
+  },
+  {
+    id: 1,
+    is_primary: true,
+    name: "Gaming",
+  },
+  {
+    id: 5,
+    is_primary: true,
+    name: "Science & Tech",
+  },
+  {
+    id: 8,
+    is_primary: true,
+    name: "Fashion & Beauty",
+  },
+  {
+    id: 14,
+    is_primary: true,
+    name: "General Chatting",
+  },
+  {
+    id: 21,
+    is_primary: false,
+    name: "Crafts, DIY, & Making",
+  },
+  {
+    id: 48,
+    is_primary: false,
+    name: "Game Developer",
+  },
+  {
+    id: 49,
+    is_primary: true,
+    name: "Bots",
+  },
+  {
+    id: 24,
+    is_primary: false,
+    name: "Tabletop Games",
+  },
+  {
+    id: 26,
+    is_primary: false,
+    name: "News & Current Events",
+  },
+  {
+    id: 29,
+    is_primary: false,
+    name: "Studying & Teaching",
+  },
+  {
+    id: 35,
+    is_primary: false,
+    name: "Content Creator",
+  },
+  {
+    id: 44,
+    is_primary: false,
+    name: "Comics & Cartoons",
+  },
+  {
+    id: 46,
+    is_primary: false,
+    name: "Console",
+  },
+  {
+    id: 47,
+    is_primary: false,
+    name: "Charity & Nonprofit",
+  },
 ]
 
-export { locales, ansiColors, categoryIds }
+export { ansiColors, categoryIds, locales }
