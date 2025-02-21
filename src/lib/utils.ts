@@ -43,9 +43,9 @@ async function getAndSaveGuilds(
 
   const data = await response.json()
 
-  const fileName = `data/${userQuery || "all"}${
-    locale ? `-${locale}` : ""
-  }${category ? `-${category}` : ""}.json`
+  const fileName = `data/${userQuery || "all"}${locale ? `-${locale}` : ""}${
+    category ? `-${category}` : ""
+  }.json`
 
   try {
     await Bun.write(fileName, JSON.stringify(data.hits, null, 2))
@@ -54,7 +54,7 @@ async function getAndSaveGuilds(
     )
   } catch (error) {
     Logger.error(
-      `An error occurred while saving the guilds to ${fileName} file`
+      `An error occurred while saving the guilds to ${fileName} file: ${error}`
     )
   }
 }
