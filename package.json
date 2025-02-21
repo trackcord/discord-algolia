@@ -7,7 +7,7 @@
   "scripts": {
     "start": "bun --bun src/index.ts",
     "invites": "bun --bun src/invites.ts",
-    "lint": "biome lint src/**/*.ts",
-    "format": "biome format src/**/*.ts --write"
+    "lint": "biome lint .",
+    "format": "biome format . --write"
   }
 }
